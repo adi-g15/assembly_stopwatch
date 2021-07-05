@@ -1,0 +1,38 @@
+name: Build Status
+
+on: [push,pull_request]
+
+jobs:
+  build_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ilammy/setup-nasm@v1.2.0
+      - uses: actions/checkout@v2
+      - name: Build Object files
+        run: |
+          nasm -f elf32 main.asm -o main.o
+          nasm -f elf32 tui_interface.asm -o tui.o
+          nasm -f elf32 core_logic.asm -o core.o
+      - name: Linking
+        run: ld -m elf_i386 *.o -o stopwatch
+      - uses: actions/upload-artifact@v2
+        with:
+          name: artifact
+          path: stopwatch
+
+  execute_job:
+    needs: build_job
+    runs-on: ubuntu-latest
+    steps:
+      - uses: ilammy/setup-nasm@v1.2.0
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: artifact
+          path: stopwatch
+      - run: ls -lR
+      - name: Running the executable
+        run: |
+          chmod 744 ./stopwatch/stopwatch
+          ./stopwatch/stopwatch
+

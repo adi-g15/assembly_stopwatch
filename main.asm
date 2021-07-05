@@ -1,10 +1,12 @@
 global _start
 
+extern sleep_for
+
 section .data
 	success_msg db "Time Up !", 0x0a	; 0x0a is the '\n' at end, ie. 10 in decimal
+	s_msg_len equ $ - success_msg		; Subtracting 'start of string (success_msg)' from 'location after (setting the) string'
 	error_msg db "Some error occured", 0x0a
-	s_msg_len equ $ - success_msg			; TODO: Will it work ? It should not i think, since $ is current location i guess
-	err_msg_len $ - error_msg
+	err_msg_len equ $ - error_msg		; for this code to work, it's necessary for the line to be just after this
 
 section .text
 _start:		; changed label from main to _start
@@ -37,7 +39,7 @@ success:
 
 errored:
 	mov eax, 4
-	mov ebx, 2	; TODO: Verify if 2 is the file descriptor for std_err
+	mov ebx, 2
 	mov ecx, error_msg
 	mov edx, err_msg_len
 
@@ -45,7 +47,7 @@ errored:
 	jmp exit
 
 exit:
-	mov eax, 1;	; code for sys_exit call
+	mov eax, 1	; code for sys_exit call
 	mov ebx, 0
 	int 0x80
 
