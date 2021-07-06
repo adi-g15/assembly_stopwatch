@@ -22,9 +22,10 @@ sleep_for:
 	mov edx, ecx	; NOTE: eax, ebx, and ecx will be overwritten by sleep_for_1_sec_linux call
 
 waiting_loop:
+	call update_display
+
 	dec edx		; decrement ecx
 
-	call update_display
 	;call sleep_for_1_sec	; seg fault at int 15G
 	call sleep_for_1_sec_linux
 

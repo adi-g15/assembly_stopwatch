@@ -13,7 +13,7 @@ _start:		; changed label from main to _start
 	; this is the start, apun ka stopwatch ka :D
 
 	mov eax, 0	; number of hours
-	mov ebx, 1	; number of minutes
+	mov ebx, 0	; number of minutes
 	mov ecx, 5	; number of seconds
 
 
