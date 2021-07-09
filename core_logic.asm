@@ -41,6 +41,7 @@ sleep_for:
 	cmp eax, 0
 	jg .waiting_loop	; if num_seconds > 0, loop again
 
+	call update_display	; one last time call update to show 0 sec left
 	ret
 
 sleep_for_1_sec_linux:
