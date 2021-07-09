@@ -8,9 +8,9 @@ World's fastest stopwatch... maybe not ;D. It's a stopwatch written in assembly,
 
 First, you need `nasm`, it will be available in package managers of all major linux distros
 
-Now, either run './build_n_run.sh' or do these steps manually:
+Now, **either run `./build_n_run.sh`** or do these steps manually:
 
-Secondly, compile the .asm files using the nasm compiler,
+Secondly, compile the .asm files using the nasm assembler,
 ```sh
 nasm main.asm -o main.o -f elf32
 nasm tui_interface.asm -o tui.o -f elf32
